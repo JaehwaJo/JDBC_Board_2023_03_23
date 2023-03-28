@@ -1,5 +1,7 @@
 package org.example.controller;
 
+import org.example.Member;
+import org.example.service.MemberService;
 import org.example.util.DBUtil;
 import org.example.util.SecSql;
 
@@ -7,6 +9,12 @@ import java.sql.Connection;
 import java.util.Scanner;
 
 public class MemberController extends Controller {
+
+  private MemberService memberService;
+
+  public MemberController(){
+    memberService = new MemberService();
+  }
   public void join() {
     String loginId;
     String loginPw;
