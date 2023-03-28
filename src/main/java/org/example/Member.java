@@ -2,7 +2,7 @@ package org.example;
 
 import java.util.Map;
 
-class Member {
+public class Member {
   public int id;
   public String regDate;
   public String updateDate;
