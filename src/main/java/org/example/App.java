@@ -66,6 +66,7 @@ public class App {
       String loginPwConfirm;
       String name;
 
+
       System.out.println("== 회원 가입 ==");
 
       // 로그인 아이디 입력
@@ -77,6 +78,19 @@ public class App {
           System.out.println("로그인 아이디를 입력해주세요.");
           continue;
         }
+
+        SecSql sql = new SecSql();
+        sql.append("select count(*) > 0");
+        sql.append("from member");
+        sql.append("where loginId = ?", loginId);
+
+        boolean isLoginDup = DBUtil.selectRowBooleanValue(conn, sql);
+
+        if(isLoginDup) {
+          System.out.println(loginId + "(은)는 이미 사용중인 로그인 아이디 입니다.");
+          continue;
+        }
+
         break;
       }
 
@@ -139,6 +153,7 @@ public class App {
       int id = DBUtil.insert(conn, sql);
       System.out.printf("%d번 회원이 등록되었습니다.\n", id);
     }
+
 
     else if(rq.getUrlPath().equals("/usr/article/write")) {
       System.out.println("== 게시물 등록 ==");
