@@ -120,5 +120,4 @@ public class ArticleController {
 
     System.out.printf("%d번 게시물이 삭제되었습니다.\n", id);
   }
-
 }

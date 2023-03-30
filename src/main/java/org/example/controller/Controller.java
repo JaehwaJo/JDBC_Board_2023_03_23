@@ -7,7 +7,6 @@ import java.util.Scanner;
 
 public abstract class Controller {
   protected Connection conn;
-
   public Controller(Connection conn, Rq rq) {
     this.conn = conn;
   }

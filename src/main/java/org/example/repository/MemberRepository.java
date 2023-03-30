@@ -22,6 +22,7 @@ public class MemberRepository {
 
   public int join(String loginId, String loginPw, String name) {
     SecSql sql = new SecSql();
+
     sql.append("INSERT INTO member");
     sql.append("SET regDate = NOW()");
     sql.append(", updateDate = NOW()");

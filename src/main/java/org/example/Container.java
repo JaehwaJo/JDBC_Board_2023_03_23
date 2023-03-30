@@ -37,7 +37,6 @@ public class Container {
     articleController = new ArticleController();
     memberController = new MemberController();
 
-
     scanner = new Scanner(System.in);
     session = new Session();
   }

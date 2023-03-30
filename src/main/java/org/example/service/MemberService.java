@@ -8,6 +8,7 @@ import java.sql.Connection;
 
 public class MemberService {
   private MemberRepository memberRepository;
+
   public MemberService() {
     memberRepository = Container.memberRepository;
   }

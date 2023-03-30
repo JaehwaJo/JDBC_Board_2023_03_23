@@ -37,7 +37,7 @@ public class App {
 
       try {
         conn = DriverManager.getConnection(url, "sbsst", "sbs123414");
-
+        Container.conn = conn;
         // action 메서드 실행
         action(Container.rq, cmd);
 

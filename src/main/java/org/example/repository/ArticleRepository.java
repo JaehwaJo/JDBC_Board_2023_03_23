@@ -80,7 +80,6 @@ public class ArticleRepository {
     sql.append("ORDER BY id DESC");
 
     List<Article> articles = new ArrayList<>();
-
     List<Map<String, Object>> articleListMap = DBUtil.selectRows(Container.conn, sql);
 
     for (Map<String, Object> articleMap : articleListMap) {

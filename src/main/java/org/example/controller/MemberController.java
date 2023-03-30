@@ -142,6 +142,7 @@ public class MemberController {
       }
 
       System.out.printf("\"%s\"님 환영합니다.\n", member.getName());
+      break;
     }
   }
 }

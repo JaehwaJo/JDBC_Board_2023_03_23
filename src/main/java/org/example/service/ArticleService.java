@@ -9,6 +9,7 @@ import java.util.List;
 
 public class ArticleService {
   private ArticleRepository articleRepository;
+
   public ArticleService() {
     articleRepository = Container.articleRepository;
   }
