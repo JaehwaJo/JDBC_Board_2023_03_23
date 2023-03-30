@@ -1,6 +1,9 @@
 package org.example.controller;
 
-import org.example.Article;
+
+import org.example.dto.Article;
+import org.example.Rq;
+import org.example.service.ArticleService;
 import org.example.util.DBUtil;
 import org.example.util.SecSql;
 
@@ -10,7 +13,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-public class ArticleController extends Controller{
+public class ArticleController extends Controller {
+
+  private ArticleService articleService;
+
+  public ArticleController(Connection conn, Scanner sc, Rq rq) {
+    super(conn, sc, rq);
+    articleService = new ArticleService(conn);
+  }
+
   public void write() {
     System.out.println("== 게시물 등록 ==");
     System.out.printf("제목 : ");
@@ -18,19 +29,10 @@ public class ArticleController extends Controller{
     System.out.printf("내용 : ");
     String body = scanner.nextLine();
 
-    SecSql sql = new SecSql();
-
-    sql.append("INSERT INTO article");
-    sql.append("SET regDate = NOW()");
-    sql.append(", updateDate = NOW()");
-    sql.append(", title = ?", title);
-    sql.append(", `body` = ?", body);
-
-    int id = DBUtil.insert(conn, sql);
+    int id = articleService.write(title, body);
 
     System.out.printf("%d번 게시물이 등록되었습니다.\n", id);
   }
-
   public void showList() {
     List<Article> articles = new ArrayList<>();
 
@@ -42,20 +44,20 @@ public class ArticleController extends Controller{
 
     List<Map<String, Object>> articleListMap = DBUtil.selectRows(conn, sql);
 
-    for(Map<String, Object> articleMap : articleListMap) {
+    for (Map<String, Object> articleMap : articleListMap) {
       articles.add(new Article(articleMap));
     }
 
     System.out.println("== 게시물 리스트 ==");
 
-    if(articles.isEmpty()) {
+    if (articles.isEmpty()) {
       System.out.println("게시물이 존재하지 않습니다.");
       return;
     }
 
     System.out.println("번호 / 제목");
 
-    for( Article article : articles ) {
+    for (Article article : articles) {
       System.out.printf("%d / %s\n", article.id, article.title);
     }
   }
@@ -63,7 +65,7 @@ public class ArticleController extends Controller{
   public void showDetail() {
     int id = rq.getIntParam("id", 0);
 
-    if(id == 0) {
+    if (id == 0) {
       System.out.println("id를 올바르게 입력해주세요.");
       return;
     }
@@ -76,7 +78,7 @@ public class ArticleController extends Controller{
 
     Map<String, Object> articleMap = DBUtil.selectRow(conn, sql);
 
-    if(articleMap.isEmpty()) {
+    if (articleMap.isEmpty()) {
       System.out.printf("%d번 게시글은 존재하지 않습니다.\n", id);
       return;
     }
@@ -88,13 +90,12 @@ public class ArticleController extends Controller{
     System.out.printf("수정날짜 : %s\n", article.updateDate);
     System.out.printf("제목 : %s\n", article.title);
     System.out.printf("내용 : %s\n", article.body);
-
   }
 
   public void modify() {
     int id = rq.getIntParam("id", 0);
 
-    if(id == 0) {
+    if (id == 0) {
       System.out.println("id를 올바르게 입력해주세요.");
       return;
     }
@@ -107,7 +108,7 @@ public class ArticleController extends Controller{
 
     int articlesCount = DBUtil.selectRowIntValue(conn, sql);
 
-    if(articlesCount == 0) {
+    if (articlesCount == 0) {
       System.out.printf("%d번 게시글은 존재하지 않습니다.\n", id);
       return;
     }
@@ -131,10 +132,9 @@ public class ArticleController extends Controller{
   }
 
   public void delete() {
-
     int id = rq.getIntParam("id", 0);
 
-    if(id == 0) {
+    if (id == 0) {
       System.out.println("id를 올바르게 입력해주세요.");
       return;
     }
@@ -149,7 +149,7 @@ public class ArticleController extends Controller{
 
     int articlesCount = DBUtil.selectRowIntValue(conn, sql);
 
-    if(articlesCount == 0) {
+    if (articlesCount == 0) {
       System.out.printf("%d번 게시글은 존재하지 않습니다.\n", id);
       return;
     }
@@ -163,4 +163,5 @@ public class ArticleController extends Controller{
 
     System.out.printf("%d번 게시물이 삭제되었습니다.\n", id);
   }
+
 }

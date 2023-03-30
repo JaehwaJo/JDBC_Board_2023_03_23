@@ -62,15 +62,8 @@ public class App {
   }
 
   private void action(Connection conn, Scanner sc, Rq rq, String cmd) {
-    ArticleController articleController = new ArticleController();
-    articleController.setConn(conn);
-    articleController.setScanner(sc);
-    articleController.setRq(rq);
-
-    MemberController memberController = new MemberController();
-    memberController.setConn(conn);
-    memberController.setScanner(sc);
-    memberController.setRq(rq);
+    ArticleController articleController = new ArticleController(conn, sc, rq);
+    MemberController memberController = new MemberController(conn, sc, rq);
 
 
 
