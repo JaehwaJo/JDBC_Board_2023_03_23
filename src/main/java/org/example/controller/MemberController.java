@@ -137,8 +137,7 @@ public class MemberController {
         continue;
       }
       System.out.printf("\"%s\"님 환영합니다.\n", member.getName());
-      Container.session.loginedMemberId = member.getId();
-      Container.session.loginedMember = member;
+      Container.session.login(member);
 
       break;
     }
@@ -149,7 +148,12 @@ public class MemberController {
       System.out.println("로그인 상태가 아닙니다.");
     }
     else {
-      System.out.println(Container.session.loginedMember.getLoginId());
+      System.out.printf("현재 로그인된 아이디는 \"" + Container.session.loginedMember.getLoginId() + "\" 입니다.\n");
     }
+  }
+
+  public void logout() {
+    Container.session.logout();
+    System.out.println("로그아웃 되었습니다.");
   }
 }

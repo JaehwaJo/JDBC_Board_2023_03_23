@@ -25,6 +25,11 @@ public class ArticleController {
   }
 
   public void write() {
+    if (Container.session.isLogined() == false) {
+      System.out.println("로그인후 이용해 주세요.");
+      return;
+    }
+
     System.out.println("== 게시물 등록 ==");
     System.out.printf("제목 : ");
     String title = Container.scanner.nextLine();
