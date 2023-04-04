@@ -23,3 +23,6 @@ CREATE TABLE `member` (
 INSERT INTO `member` SET regDate = NOW(), updateDate = NOW(), loginId = 'admin', loginPw = 'admin', `name` = "관리자";
 INSERT INTO `member` SET regDate = NOW(), updateDate = NOW(), loginId = 'user1', loginPw = 'user1', `name` = "홍길동";
 INSERT INTO `member` SET regDate = NOW(), updateDate = NOW(), loginId = 'user2', loginPw = 'user2', `name` = "홍길순";
+
+# 게시물 테이블에 memberId 칼럼 추가
+ALTER TABLE article ADD COLUMN memberId INT(10) UNSIGNED NOT NULL AFTER updateDate;
