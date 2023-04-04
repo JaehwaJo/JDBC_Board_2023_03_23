@@ -1,5 +1,13 @@
+
 package org.example.session;
 
-public class Session {
+import org.example.dto.Member;
 
+public class Session {
+  public int loginedMemberId;
+  public Member loginedMember;
+
+  public Session() {
+    loginedMemberId = -1;
+  }
 }

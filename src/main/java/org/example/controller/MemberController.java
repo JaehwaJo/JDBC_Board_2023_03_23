@@ -1,12 +1,8 @@
 package org.example.controller;
 
 import org.example.Container;
-import org.example.Rq;
 import org.example.dto.Member;
 import org.example.service.MemberService;
-
-import java.sql.Connection;
-import java.util.Scanner;
 
 public class MemberController {
   private MemberService memberService;
@@ -117,12 +113,12 @@ public class MemberController {
       return;
     }
 
-    int tryMaxCount = 3;
-    int tryCount = 0;
+    int loginTryMaxCount = 3;
+    int loginTryCount = 0;
 
     // 로그인 비밀번호 입력
     while (true) {
-      if(tryCount >= tryMaxCount) {
+      if(loginTryCount >= loginTryMaxCount) {
         System.out.println("비밀번호 확인 후 다음에 다시 시도해주세요.");
         break;
       }
@@ -137,12 +133,23 @@ public class MemberController {
 
       if(member.getLoginPw().equals(loginPw) == false) {
         System.out.println("비밀번호가 일치하지 않습니다.");
-        tryCount++;
+        loginTryCount++;
         continue;
       }
-
       System.out.printf("\"%s\"님 환영합니다.\n", member.getName());
+      Container.session.loginedMemberId = member.getId();
+      Container.session.loginedMember = member;
+
       break;
+    }
+  }
+
+  public void whoami() {
+    if(Container.session.loginedMemberId == -1) {
+      System.out.println("로그인 상태가 아닙니다.");
+    }
+    else {
+      System.out.println(Container.session.loginedMember.getLoginId());
     }
   }
 }
