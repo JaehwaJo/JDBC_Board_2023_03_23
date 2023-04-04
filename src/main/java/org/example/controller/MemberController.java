@@ -144,7 +144,7 @@ public class MemberController {
   }
 
   public void whoami() {
-    if(Container.session.loginedMemberId == -1) {
+    if(Container.session.isLogined() == false) {
       System.out.println("로그인 상태가 아닙니다.");
     }
     else {

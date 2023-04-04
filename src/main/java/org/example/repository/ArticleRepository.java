@@ -75,8 +75,10 @@ public class ArticleRepository {
   public List<Article> getArticles() {
     SecSql sql = new SecSql();
 
-    sql.append("SELECT *");
-    sql.append("FROM article");
+    sql.append("SELECT A.*, M.name as extra__writerName");
+    sql.append("FROM article as A");
+    sql.append("INNER JOIN member as M");
+    sql.append("on A.memberId = M.id");
     sql.append("ORDER BY id DESC");
 
     List<Article> articles = new ArrayList<>();
