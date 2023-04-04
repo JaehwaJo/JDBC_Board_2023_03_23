@@ -74,14 +74,36 @@ public class ArticleRepository {
     return new Article(articleMap);
   }
 
-  public List<Article> getArticles() {
+  public List<Article> getArticles(Map<String, Object> args, String searchKeyWord) {
     SecSql sql = new SecSql();
 
-    sql.append("SELECT A.*, M.name as extra__writerName");
-    sql.append("FROM article as A");
-    sql.append("INNER JOIN member as M");
-    sql.append("on A.memberId = M.id");
-    sql.append("ORDER BY id DESC");
+    if(args.containsKey("searchKeyword")) {
+      searchKeyWord = (String) args.get("searchKeyword");
+    }
+
+    int limitFrom = -1;
+    int limitTake = -1;
+
+    if(args.containsKey("limitFrom")) {
+      limitFrom = (int) args.get("limitFrom");
+    }
+
+    if(args.containsKey("limitTake")) {
+      limitTake = (int) args.get("limitTake");
+    }
+
+    sql.append("SELECT A.*, M.name AS extra__writerName");
+    sql.append("FROM article AS A");
+    sql.append("INNER JOIN member AS M");
+    sql.append("ON A.memberId = M.id");
+    if(searchKeyWord.length() > 0) {
+      sql.append("WHERE A.title LIKE CONCAT('%', ?, '%')", searchKeyWord);
+    }
+    sql.append("ORDER BY A.id DESC");
+
+    if(limitFrom != -1) {
+      sql.append("LIMIT ?, ?", limitFrom, limitTake);
+    }
 
     List<Article> articles = new ArrayList<>();
     List<Map<String, Object>> articleListMap = DBUtil.selectRows(Container.conn, sql);
@@ -102,5 +124,5 @@ public class ArticleRepository {
 
     DBUtil.update(Container.conn, sql);
   }
-  
+
 }
