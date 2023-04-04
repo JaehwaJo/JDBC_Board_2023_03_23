@@ -1,7 +1,10 @@
 package org.example.dto;
 
+import lombok.Data;
+
 import java.util.Map;
 
+@Data
 public class Article {
   public int id;
   public String regDate;
@@ -12,7 +15,6 @@ public class Article {
   public int hit;
   public String extra__writerName;
 
-
   public Article(Map<String, Object> articleMap) {
     this.id = (int) articleMap.get("id");
     this.regDate = (String) articleMap.get("regDate");
@@ -22,22 +24,8 @@ public class Article {
     this.body = (String) articleMap.get("body");
     this.hit = (int) articleMap.get("hit");
 
-    if (articleMap.get("extra__writerName") != null) {
-      this.extra__writerName = (String) articleMap.get("extra__writerName");
+    if(articleMap.get("extra__writerName") != null) {
+      this.extra__writerName = (String)articleMap.get("extra__writerName");
     }
-  }
-
-  @Override
-  public String toString() {
-    return "Article{" +
-        "id=" + id +
-        ", regDate='" + regDate + '\'' +
-        ", updateDate='" + updateDate + '\'' +
-        ", memberId=" + memberId +
-        ", title='" + title + '\'' +
-        ", body='" + body + '\'' +
-        ", hit='" + hit + '\'' +
-        ", extra__writerName='" + extra__writerName + '\'' +
-        '}';
   }
 }

@@ -132,10 +132,11 @@ public class MemberController {
       }
 
       if(member.getLoginPw().equals(loginPw) == false) {
-        System.out.println("비밀번호가 일치하지 않습니다.");
         loginTryCount++;
+        System.out.println("비밀번호가 일치하지 않습니다.");
         continue;
       }
+
       System.out.printf("\"%s\"님 환영합니다.\n", member.getName());
       Container.session.login(member);
 
@@ -148,7 +149,7 @@ public class MemberController {
       System.out.println("로그인 상태가 아닙니다.");
     }
     else {
-      System.out.printf("현재 로그인된 아이디는 \"" + Container.session.loginedMember.getLoginId() + "\" 입니다.\n");
+      System.out.println(Container.session.loginedMember.getLoginId());
     }
   }
 

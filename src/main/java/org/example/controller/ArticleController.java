@@ -3,16 +3,9 @@ package org.example.controller;
 
 import org.example.Container;
 import org.example.dto.Article;
-import org.example.Rq;
 import org.example.service.ArticleService;
-import org.example.util.DBUtil;
-import org.example.util.SecSql;
 
-import java.sql.Connection;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
 
 import static org.example.Container.rq;
 
@@ -25,8 +18,8 @@ public class ArticleController {
   }
 
   public void write() {
-    if (Container.session.isLogined() == false) {
-      System.out.println("로그인후 이용해 주세요.");
+    if(Container.session.isLogined() == false) {
+      System.out.println("로그인 후 이용해주세요.");
       return;
     }
 
@@ -75,14 +68,20 @@ public class ArticleController {
     }
 
     System.out.printf("번호 : %d\n", article.id);
-    System.out.printf("글쓴날짜 : %s\n", article.regDate);
+    System.out.printf("등록날짜 : %s\n", article.regDate);
     System.out.printf("수정날짜 : %s\n", article.updateDate);
+    System.out.printf("작성자 : %s\n", article.extra__writerName);
     System.out.printf("조회수 : %d\n", article.hit);
     System.out.printf("제목 : %s\n", article.title);
     System.out.printf("내용 : %s\n", article.body);
   }
 
   public void modify() {
+    if(Container.session.isLogined() == false) {
+      System.out.println("로그인 후 이용해주세요.");
+      return;
+    }
+
     int id = rq.getIntParam("id", 0);
 
     if (id == 0) {
@@ -108,6 +107,11 @@ public class ArticleController {
   }
 
   public void delete() {
+    if(Container.session.isLogined() == false) {
+      System.out.println("로그인 후 이용해주세요.");
+      return;
+    }
+
     int id = rq.getIntParam("id", 0);
 
     if (id == 0) {
@@ -128,4 +132,5 @@ public class ArticleController {
 
     System.out.printf("%d번 게시물이 삭제되었습니다.\n", id);
   }
+
 }
